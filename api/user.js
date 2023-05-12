@@ -13,7 +13,6 @@ module.exports = app => {
     const save = async (request, response) => {
         const user = { ... request.body }
         if(request.params.id) user.id = request.params.id
-
         try {
             existsOrError(user.name, 'Nome não informado')
             existsOrError(user.email, 'Email não informado')
@@ -49,5 +48,12 @@ module.exports = app => {
             .catch(error => response.status(500).send(error))
     }
 
-    return { save, get }
+    const getById = (request, response ) => {
+        const id = request.params.id
+        app.db('users').select('id', 'name', 'email', 'admin').where({id: id}).first()
+            .then(user=> response.json(user))
+            .catch(error => response.status(500).send(error))
+    }
+
+    return { save, get, getById }
 }

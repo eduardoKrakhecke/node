@@ -1,18 +1,12 @@
-// Update with your config settings.
+const { db } = require('./.env')
+
 
 module.exports = {
-
-  client: 'pg',
-  connection: {
-    host: 'localhost',
-    database: 'knowledge',
-    user:     'postgres',
-    password: '123'
-  },
+  client: 'postgresql',
+  connection: db,
   pool: {
     min: 2,
-    max: 10,
-    propagateCreateError: false
+    max: 10
   },
   migrations: {
     tableName: 'knex_migrations'

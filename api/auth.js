@@ -7,6 +7,7 @@ module.exports = app => {
     const signin = async (request, response) => {
         if(!request.body.email || !request.body.password) {
             response.status(400).send('Informe usuário e senha')
+            return
         }
         const user = await app.db('users')
             .where({email: request.body.email})
@@ -15,7 +16,10 @@ module.exports = app => {
         if(!user) return response.status(400).send('Usuário não encontrado!')
 
         const isMatch = bcrypt.compareSync(request.body.password, user.password)
-        if(!isMatch) response.status(401).send('Usuário ou senha inválidos')
+        if(!isMatch) {
+            response.status(401).send('Usuário ou senha inválidos')
+            return
+        }
 
         const now = Math.floor(Date.now() / 1000)
 

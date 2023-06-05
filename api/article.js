@@ -47,7 +47,7 @@ module.exports = app => {
         const count = parseInt(result.count)
 
         app.db('articles')
-            .select('id', 'name', 'description')
+            .select('id', 'name', 'description', 'content')
             .limit(limit).offset(page * limit - limit)
             .then(articles => response.json({ data: articles, count, limit }))
             .catch(err => response.status(500).send(err))

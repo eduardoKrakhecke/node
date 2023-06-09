@@ -1,3 +1,4 @@
+require('dotenv').config()
 const app = require('express')()
 const consign = require('consign')
 const db = require('./config/db')
@@ -17,6 +18,8 @@ consign()
     .then('./config/routes.js')
     .into(app)
 
-app.listen(8080, () => {
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => {
     console.log('Backend executando')
 })
